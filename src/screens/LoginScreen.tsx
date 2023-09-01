@@ -7,15 +7,21 @@ import {
   TouchableOpacity,
   TextInput,
   TouchableHighlight,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {AppIcons, AppImgSrcs} from '../themes';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../navigation/AppNavigation';
+import {Login} from '../apis/Api';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -24,51 +30,77 @@ export default function LoginScreen() {
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  return (
-    <View style={styles.container}>
-      <View>
-        <Image style={styles.banner} source={AppImgSrcs.login_img} />
-        <View style={styles.overlay} />
-      </View>
 
-      <View style={styles.viewInput}>
-        <Text style={styles.textInput}>{'Username'}</Text>
-        <TextInput
-          style={styles.inputUserName}
-          onChangeText={setUsername}
-          placeholder="Enter Username"
-        />
-        <Text style={styles.textInput}>{'Password'}</Text>
-        <View>
+  useEffect(() => {}, []);
+
+  const loginRequest = async () => {
+    try {
+      const res = await Login({
+        username: username,
+        password: password,
+      });
+      navigation.navigate('Home');
+      console.log(res);
+    } catch (error) {
+      Alert.alert('Error during the login process');
+      console.log(error);
+    }
+  };
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.viewBanner}>
+          <Image style={styles.banner} source={AppImgSrcs.login_img} />
+          <View style={styles.overlay} />
+        </View>
+
+        <View style={styles.viewInput}>
+          <Text style={styles.textInput}>{'Username'}</Text>
           <TextInput
-            style={styles.inputPassword}
-            onChangeText={setPassword}
-            placeholder="Enter Password"
-            secureTextEntry={showPassword ? true : false}
+            style={styles.inputUserName}
+            onChangeText={setUsername}
+            placeholder="Enter Username"
           />
-          <TouchableOpacity
-            style={styles.subPassword}
-            onPress={() => setShowPassword(!showPassword)}>
-            {AppIcons.Icons({size: 24, name: 'eye'})}
+          <Text style={styles.textInput}>{'Password'}</Text>
+          <View>
+            <TextInput
+              style={styles.inputPassword}
+              onChangeText={setPassword}
+              placeholder="Enter Password"
+              secureTextEntry={showPassword ? true : false}
+            />
+            <TouchableOpacity
+              style={styles.subPassword}
+              onPress={() => setShowPassword(!showPassword)}>
+              {AppIcons.Icons({size: 24, name: 'eye'})}
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity>
+            <Text style={styles.textForgotPassword}>{'Forgot password'}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Text style={styles.textForgotPassword}>{'Forgot password'}</Text>
-        </TouchableOpacity>
-      </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Login')}
-        style={styles.button}>
-        <Text style={styles.textButton}>{'Login'}</Text>
-      </TouchableOpacity>
-    </View>
+        <View style={styles.viewButton}>
+          <TouchableOpacity
+            onPress={() => loginRequest()}
+            style={styles.button}>
+            <Text style={styles.textButton}>{'Login'}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.space}></View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 59,
     backgroundColor: 'white',
+  },
+  viewBanner: {
+    flex: 55,
   },
   banner: {
     width: 0.9 * windowWidth,
@@ -81,6 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
   },
   viewInput: {
+    flex: 25,
     marginBottom: 10,
     alignItems: 'center',
   },
@@ -119,6 +152,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#9de86f',
   },
+  viewButton: {
+    flex: 4,
+  },
   button: {
     backgroundColor: '#9de86f',
     height: 66,
@@ -131,5 +167,8 @@ const styles = StyleSheet.create({
   },
   textButton: {
     fontSize: 25,
+  },
+  space: {
+    flex: 13,
   },
 });
