@@ -13,6 +13,7 @@ const HomeScreen = () => {
         {AppIcons.Icons({size: 24, name: 'notification_bell'})}
       </View>
     </SafeAreaView>
+
   );
 };
 export default HomeScreen;

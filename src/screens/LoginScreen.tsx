@@ -23,6 +23,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const LoginScreen = () => {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -39,7 +40,9 @@ const LoginScreen = () => {
         username: username,
         password: password,
       });
+
       navigation.navigate('BottomTab');
+
       console.log(res);
     } catch (error) {
       Alert.alert('Error during the login process');
