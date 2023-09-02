@@ -15,7 +15,7 @@ import {RootStackParams} from '../navigation/AppNavigation';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function SplashScreen() {
+const SplashScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   return (
@@ -32,7 +32,8 @@ export default function SplashScreen() {
       </TouchableOpacity>
     </View>
   );
-}
+};
+export default SplashScreen;
 
 const styles = StyleSheet.create({
   container: {
