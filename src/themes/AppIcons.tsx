@@ -3,10 +3,12 @@
 import React from 'react';
 import right_arrow from '../assets/icons/right_arrow.svg';
 import eye from '../assets/icons/eye.svg';
+import notification_bell from '../assets/icons/notification_bell.svg';
 
 const SVGs = {
   eye,
   right_arrow,
+  notification_bell,
 };
 export default {
   Icons: ({

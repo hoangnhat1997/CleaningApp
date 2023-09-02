@@ -22,7 +22,8 @@ import {Login} from '../apis/Api';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function LoginScreen() {
+const LoginScreen = () => {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -39,7 +40,9 @@ export default function LoginScreen() {
         username: username,
         password: password,
       });
-      navigation.navigate('Home');
+
+      navigation.navigate('BottomTab');
+
       console.log(res);
     } catch (error) {
       Alert.alert('Error during the login process');
@@ -93,7 +96,9 @@ export default function LoginScreen() {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-}
+};
+
+export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 59,
