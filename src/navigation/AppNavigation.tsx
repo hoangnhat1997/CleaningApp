@@ -25,7 +25,7 @@ const Stack = createNativeStackNavigator<RootStackParams>();
 const AppNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="BottomTab">
+      <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen
           name="BottomTab"
           options={{headerShown: false}}

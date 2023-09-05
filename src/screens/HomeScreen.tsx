@@ -1,20 +1,41 @@
-import {View, Text, StyleSheet, SafeAreaView, Dimensions} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Dimensions,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import useStore from '../store/useStore';
 import {AppIcons} from '../themes';
 import CompletedTaskItem from '../components/CompletedTaskItem';
+import {getTasks} from '../apis/Api';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const HomeScreen = () => {
-  const accessToken: any = useStore((state: any) => state.accessToken);
+  // const token: any = useStore((state: any) => state.accessToken);
 
+  useEffect(() => {
+    getTasksData();
+  }, []);
+
+  const getTasksData = async () => {
+    try {
+      const res = await getTasks();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.viewHeader}>
         <View style={styles.viewAvatar}>
-          {AppIcons.Icons({size: 24, name: 'notification_bell'})}
+          {AppIcons.Icons({size: 33, name: 'avatar'})}
           <View style={styles.viewName}>
             <Text style={styles.textName}>{'Hello,'}</Text>
             <Text style={styles.textName}>{'Nhat'}</Text>
@@ -42,6 +63,9 @@ const HomeScreen = () => {
         <View style={styles.viewTasks}>
           <CompletedTaskItem />
         </View>
+        <TouchableOpacity onPress={() => getTasksData()}>
+          <Text>Button</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
