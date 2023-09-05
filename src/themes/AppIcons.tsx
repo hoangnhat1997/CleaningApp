@@ -4,8 +4,10 @@ import React from 'react';
 import right_arrow from '../assets/icons/right_arrow.svg';
 import eye from '../assets/icons/eye.svg';
 import notification_bell from '../assets/icons/notification_bell.svg';
+import avatar from '../assets/icons/avatar.svg';
 
 const SVGs = {
+  avatar,
   eye,
   right_arrow,
   notification_bell,
